@@ -9,6 +9,7 @@ import conversationRoutes from './routes/conversation.routes';
 import communityRoutes from './routes/community.routes';
 import storyRoutes from './routes/story.routes';
 import feedRoutes from './routes/feed.routes';
+import notificationRoutes from './routes/notification.routes';
 import { errorHandler } from './middleware/error';
 
 const app: Express = express();
@@ -38,6 +39,7 @@ app.use('/api/v1/conversations', conversationRoutes);
 app.use('/api/v1/communities', communityRoutes);
 app.use('/api/v1/stories', storyRoutes);
 app.use('/api/v1/feed', feedRoutes);
+app.use('/api/v1/notifications', notificationRoutes);
 
 // Error handler (must be last)
 app.use(errorHandler);
