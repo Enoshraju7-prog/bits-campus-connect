@@ -2,6 +2,8 @@ import express, { type Express } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
+import authRoutes from './routes/auth.routes';
+import { errorHandler } from './middleware/error';
 
 const app: Express = express();
 
@@ -21,5 +23,11 @@ app.use(cookieParser());
 app.get('/api/v1/health', (_req, res) => {
   res.json({ success: true, data: { status: 'ok', timestamp: new Date().toISOString() } });
 });
+
+// Routes
+app.use('/api/v1/auth', authRoutes);
+
+// Error handler (must be last)
+app.use(errorHandler);
 
 export default app;
