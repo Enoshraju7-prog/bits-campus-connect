@@ -1,7 +1,5 @@
 {
   "buildCommand": "pnpm --filter @bits-campus-connect/shared build && pnpm --filter @bits-campus-connect/web build",
-  "outputDirectory": "apps/web/.next",
   "installCommand": "pnpm install",
-  "framework": "nextjs",
-  "ignoreCommand": "exit 0"
+  "outputDirectory": "apps/web/.next"
 }
