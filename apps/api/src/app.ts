@@ -3,6 +3,8 @@ import cors from 'cors';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import authRoutes from './routes/auth.routes';
+import userRoutes from './routes/user.routes';
+import connectionRoutes from './routes/connection.routes';
 import { errorHandler } from './middleware/error';
 
 const app: Express = express();
@@ -26,6 +28,8 @@ app.get('/api/v1/health', (_req, res) => {
 
 // Routes
 app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/connections', connectionRoutes);
 
 // Error handler (must be last)
 app.use(errorHandler);
