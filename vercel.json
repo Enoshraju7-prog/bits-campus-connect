@@ -1,5 +1,0 @@
-{
-  "buildCommand": "pnpm --filter @bits-campus-connect/shared build && pnpm --filter @bits-campus-connect/web build",
-  "installCommand": "pnpm install",
-  "outputDirectory": "apps/web/.next"
-}

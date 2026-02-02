@@ -1,0 +1,5 @@
+{
+  "installCommand": "cd ../.. && pnpm install",
+  "buildCommand": "cd ../.. && pnpm --filter @bits-campus-connect/shared build && cd apps/web && next build",
+  "framework": "nextjs"
+}

@@ -5,7 +5,6 @@
       "Bash(.claude/scripts/test-and-log.sh:*)",
       "Bash(bash .claude/scripts/pm/*)",
       "Bash(.claude/scripts/pm/*)",
-
       "Bash(cat:*)",
       "Bash(cat:*)",
       "Bash(composer:*)",
@@ -40,7 +39,28 @@
       "Bash(tree:*)",
       "List(**)",
       "WebFetch(domain:github.com)",
-      "WebSearch"
+      "WebSearch",
+      "Bash(export PATH=\"/opt/homebrew/opt/postgresql@15/bin:$PATH\")",
+      "Bash(createdb:*)",
+      "Bash(psql:*)",
+      "Bash(curl:*)",
+      "Bash(python3 -m json.tool:*)",
+      "Bash(command -v:*)",
+      "Bash(vercel whoami:*)",
+      "Bash(railway whoami:*)",
+      "Bash(railway init:*)",
+      "Bash(railway add:*)",
+      "Bash(railway service:*)",
+      "Bash(railway status:*)",
+      "Bash(railway variables:*)",
+      "Bash(railway up:*)",
+      "Bash(railway domain:*)",
+      "Bash(vercel --yes:*)",
+      "Bash(vercel rm:*)",
+      "Bash(railway logs:*)",
+      "Bash(DATABASE_URL=\"postgresql://postgres:iJCtedEMiagsWuhCcdRjPjxXCLnJkPjP@tramway.proxy.rlwy.net:17492/railway\" npx tsx:*)",
+      "Bash(DATABASE_URL=\"postgresql://postgres:iJCtedEMiagsWuhCcdRjPjxXCLnJkPjP@tramway.proxy.rlwy.net:17492/railway\" pnpm --filter @bits-campus-connect/api db:seed:*)",
+      "Bash(vercel:*)"
     ]
   }
 }
