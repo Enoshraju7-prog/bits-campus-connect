@@ -9,6 +9,7 @@ import { useAuthStore } from '../../../stores/auth';
 export default function LoginPage() {
   const router = useRouter();
   const setUser = useAuthStore((s) => s.setUser);
+  const setAccessToken = useAuthStore((s) => s.setAccessToken);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -20,12 +21,13 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      const data = await api<{ user: { id: string; email: string; username: string; campus: string; name: string } }>(
+      const data = await api<{ user: { id: string; email: string; username: string; campus: string; name: string }; accessToken: string }>(
         '/auth/login',
         { method: 'POST', body: { email, password } },
       );
+      setAccessToken(data.accessToken);
       setUser(data.user);
-      router.push('/');
+      router.push('/feed');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Login failed');
     } finally {

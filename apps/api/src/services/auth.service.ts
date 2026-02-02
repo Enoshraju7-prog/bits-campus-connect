@@ -16,7 +16,7 @@ const OTP_EXPIRY_SECONDS = 600; // 10 minutes
 const MAX_OTP_RESENDS_PER_HOUR = 3;
 const BCRYPT_ROUNDS = 12;
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
 function generateOtp(): string {
   return Math.floor(100000 + Math.random() * 900000).toString();
@@ -74,9 +74,9 @@ export async function sendOtp(email: string) {
     await redis.expire(resendCountKey, 3600);
   }
 
-  if (process.env.RESEND_API_KEY) {
+  if (resend) {
     await resend.emails.send({
-      from: 'BITS Campus Connect <noreply@bitscampusconnect.com>',
+      from: 'BITS Campus Connect <onboarding@resend.dev>',
       to: email,
       subject: 'Your verification code',
       html: `<p>Your verification code is: <strong>${otp}</strong></p><p>This code expires in 10 minutes.</p>`,

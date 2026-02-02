@@ -7,10 +7,18 @@ interface ApiOptions extends Omit<RequestInit, 'body'> {
 export async function api<T>(endpoint: string, options: ApiOptions = {}): Promise<T> {
   const { body, headers: customHeaders, ...rest } = options;
 
-  const headers: HeadersInit = {
+  const headers: Record<string, string> = {
     'Content-Type': 'application/json',
-    ...customHeaders,
+    ...(customHeaders as Record<string, string>),
   };
+
+  // Attach access token from localStorage if available
+  try {
+    const token = localStorage.getItem('auth_token');
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+  } catch {}
 
   const res = await fetch(`${API_URL}${endpoint}`, {
     credentials: 'include',

@@ -10,6 +10,7 @@ function VerifyForm() {
   const searchParams = useSearchParams();
   const email = searchParams.get('email') || '';
   const setUser = useAuthStore((s) => s.setUser);
+  const setAccessToken = useAuthStore((s) => s.setAccessToken);
   const [otp, setOtp] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -21,12 +22,13 @@ function VerifyForm() {
     setLoading(true);
 
     try {
-      const data = await api<{ user: { id: string; email: string; username: string; campus: string } }>(
+      const data = await api<{ user: { id: string; email: string; username: string; campus: string }; accessToken: string }>(
         '/auth/verify-email',
         { method: 'POST', body: { email, otp } },
       );
+      setAccessToken(data.accessToken);
       setUser(data.user);
-      router.push('/');
+      router.push('/feed');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Verification failed');
     } finally {
