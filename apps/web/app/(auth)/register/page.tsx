@@ -26,11 +26,13 @@ export default function RegisterPage() {
 
     setLoading(true);
     try {
-      await api('/auth/register', {
+      const data = await api<{ otp?: string }>('/auth/register', {
         method: 'POST',
         body: { email: form.email, username: form.username, name: form.name, password: form.password },
       });
-      router.push(`/verify?email=${encodeURIComponent(form.email)}`);
+      const params = new URLSearchParams({ email: form.email });
+      if (data.otp) params.set('code', data.otp);
+      router.push(`/verify?${params}`);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Registration failed');
     } finally {

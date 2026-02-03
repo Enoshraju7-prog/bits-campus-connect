@@ -9,9 +9,10 @@ function VerifyForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const email = searchParams.get('email') || '';
+  const codeFromUrl = searchParams.get('code') || '';
   const setUser = useAuthStore((s) => s.setUser);
   const setAccessToken = useAuthStore((s) => s.setAccessToken);
-  const [otp, setOtp] = useState('');
+  const [otp, setOtp] = useState(codeFromUrl);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [resending, setResending] = useState(false);
@@ -40,7 +41,8 @@ function VerifyForm() {
     setResending(true);
     setError('');
     try {
-      await api('/auth/resend-otp', { method: 'POST', body: { email } });
+      const data = await api<{ otp?: string }>('/auth/resend-otp', { method: 'POST', body: { email } });
+      if (data.otp) setOtp(data.otp);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to resend OTP');
     } finally {

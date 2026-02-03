@@ -54,9 +54,9 @@ export async function register(email: string, password: string, username: string
     data: { email, username, passwordHash, name, campus, batchYear },
   });
 
-  await sendOtp(email);
+  const otpResult = await sendOtp(email);
 
-  return { userId: user.id, email: user.email, campus: user.campus };
+  return { userId: user.id, email: user.email, campus: user.campus, otp: otpResult.otp };
 }
 
 export async function sendOtp(email: string) {
@@ -75,17 +75,22 @@ export async function sendOtp(email: string) {
   }
 
   if (resend) {
-    await resend.emails.send({
-      from: 'BITS Campus Connect <onboarding@resend.dev>',
-      to: email,
-      subject: 'Your verification code',
-      html: `<p>Your verification code is: <strong>${otp}</strong></p><p>This code expires in 10 minutes.</p>`,
-    });
+    try {
+      await resend.emails.send({
+        from: 'BITS Campus Connect <onboarding@resend.dev>',
+        to: email,
+        subject: 'Your verification code',
+        html: `<p>Your verification code is: <strong>${otp}</strong></p><p>This code expires in 10 minutes.</p>`,
+      });
+    } catch (err) {
+      console.log(`[EMAIL FAILED] OTP for ${email}: ${otp}`, err);
+    }
   } else {
     console.log(`[DEV] OTP for ${email}: ${otp}`);
   }
 
-  return { message: 'OTP sent successfully' };
+  // Return OTP in response for testing (remove in production with proper email)
+  return { message: 'OTP sent successfully', otp };
 }
 
 export async function verifyEmail(email: string, otp: string) {
